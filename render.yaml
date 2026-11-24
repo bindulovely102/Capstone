@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: pinterest-clone
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/pinterest.db
+      - key: UPLOAD_FOLDER
+        value: /var/data/uploads
+    disk:
+      name: pinterest-data
+      mountPath: /var/data
+      sizeGB: 1
